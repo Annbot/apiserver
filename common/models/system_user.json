@@ -1,0 +1,124 @@
+{
+  "name": "system_user",
+  "base": "User",
+  "idInjection": true,
+  "forceId":true,
+  "strict":true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "balance": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "hidden":["realm","credentials","challenges","emailVerified","status","created","lastUpdated"],
+  "validations": [],
+  "relations": {
+    "vendors": {
+      "type": "hasMany",
+      "model": "vendor",
+      "foreignKey": "ownerid"
+    },
+    "transactions": {
+      "type": "hasMany",
+      "model": "transaction",
+      "foreignKey": "from_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property":"updateAttributes"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "login"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "bank",
+      "permission": "ALLOW",
+      "property": "issueCoin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "bank",
+      "permission": "ALLOW",
+      "property": "destroyCoin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "updateInfo"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "bank",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__vendors"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__vendors"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__vendors"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__transactions"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "listTransaction"
+    }
+
+  ],
+  "methods": {}
+}

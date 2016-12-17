@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysqlDs": {
+    "host": "169.44.14.187",
+    "port": 3306,
+    "url": "",
+    "database": "chancedemo",
+    "password": "zaq11qaz",
+    "name": "mysqlDs",
+    "user": "root",
+    "connector": "mysql"
+  }
+}

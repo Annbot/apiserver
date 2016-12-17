@@ -1,0 +1,47 @@
+{
+  "name": "product",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "number",
+      "required": true
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "createtimestamp": {
+      "type": "date"
+    },
+    "updatetimestamp": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "hidden":["createtimestamp","updatetimestamp"],
+
+  "validations": [],
+  "relations": {
+    "vendor": {
+      "type": "belongsTo",
+      "model": "vendor",
+      "foreignKey": "vendorid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

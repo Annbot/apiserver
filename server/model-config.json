@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "mysqlDs",
+    "public" : false
+  },
+  "AccessToken": {
+    "dataSource": "mysqlDs",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "mysqlDs",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mysqlDs",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "mysqlDs",
+    "public": false
+  },
+  "system_user": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "vendor": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "product": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "transaction": {
+    "dataSource": "mysqlDs",
+    "public": true
+  }
+}

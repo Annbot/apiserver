@@ -1,0 +1,59 @@
+{
+  "name": "vendor",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "createtimestamp": {
+      "type": "date",
+      "required": false
+    },
+    "updatetimestamp": {
+      "type": "date",
+      "required": false
+    }
+  },
+  "hidden":["createtimestamp","updatetimestamp"],
+  "validations": [],
+  "relations": {
+    "system_user": {
+      "type": "belongsTo",
+      "model": "system_user",
+      "foreignKey": "ownerid"
+    },
+    "products": {
+      "type": "hasMany",
+      "model": "product",
+      "foreignKey": "vendorid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__products"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__products"
+    }
+  ],
+  "methods": {}
+}

@@ -1,8 +1,11 @@
 'use strict';
 
+var config = require('../../server/config.json');
 var dataformat = require("../dataformat/dataformat");
 var myutil = require("../util/util");
 var modelname="system_user";
+var path = require('path');
+
 
 module.exports = function(System_user) {
   System_user.beforeRemote('**', function(ctx, user, next) {
@@ -13,6 +16,38 @@ module.exports = function(System_user) {
   System_user.beforeRemote('create', function(context, user, next) {
     context.args.data = dataformat.userformat(context.args.data);
     next();
+  });
+
+  //send verification email after registration
+  System_user.afterRemote('create', function(context, user, next) {
+    console.log('> user.afterRemote triggered');
+
+    var options = {
+      type: 'email',
+      to: user.email,
+      from: 'loopbacktestwhd@gmail.com',
+      subject: 'Thanks for registering.',
+      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
+      redirect: '/verified',
+      user: user
+    };
+
+    user.verify(options, function(err, response) {
+      if (err) {
+        User.deleteById(user.id);
+        return next(err);
+      }
+
+      console.log('> verification email sent:', response);
+
+      context.res.render('response', {
+        title: 'Signed up successfully',
+        content: 'Please check your email and click on the verification link ' +
+        'before logging in.',
+        redirectTo: '/',
+        redirectToLinkText: 'Log in'
+      });
+    });
   });
 
   System_user.beforeRemote('prototype.__create__vendors', function(context, user, next) {
@@ -169,5 +204,22 @@ module.exports = function(System_user) {
     description :"List all related transactions" ,
     returns: {arg: 'related transaction', type: 'array'},
     http: {path:'/listTransaction', verb: 'post'}
+  });
+
+  //send password reset link when requested
+  System_user.on('resetPasswordRequest', function(info) {
+    var url = 'http://' + config.host + ':' + config.port + '/reset-password';
+    var html = 'Click <a href="' + url + '?access_token=' +
+      info.accessToken.id + '">here</a> to reset your password';
+
+    System_user.app.models.Email.send({
+      to: info.email,
+      from: info.email,
+      subject: 'Password reset',
+      html: html
+    }, function(err) {
+      if (err) return console.log(err);
+      console.log('> sending password reset email to:', info.email);
+    });
   });
 };

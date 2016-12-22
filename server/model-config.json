@@ -35,7 +35,10 @@
   },
   "system_user": {
     "dataSource": "mysqlDs",
-    "public": true
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   },
   "vendor": {
     "dataSource": "mysqlDs",
@@ -48,5 +51,8 @@
   "transaction": {
     "dataSource": "mysqlDs",
     "public": true
+  },
+  "Email": {
+    "dataSource": "emailDs"
   }
 }

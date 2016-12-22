@@ -45,6 +45,7 @@ module.exports = function(app) {
     });
   });
 
+  //if some one has a vendor object created by himself ,then he is a vendor
   Role.registerResolver('vendor', function(role, context, cb) {
     //get userid
     var userid=context.accessToken.userId;
@@ -57,7 +58,7 @@ module.exports = function(app) {
         console.log(err);
         return cb(context.method, false);
       }
-      cb(null, count > 0); // true = is a team member
+      cb(null, count > 0);
     });
 
   });

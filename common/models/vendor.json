@@ -9,14 +9,6 @@
     "name": {
       "type": "string",
       "required": true
-    },
-    "createtimestamp": {
-      "type": "date",
-      "required": false
-    },
-    "updatetimestamp": {
-      "type": "date",
-      "required": false
     }
   },
   "hidden":["createtimestamp","updatetimestamp"],
@@ -55,5 +47,8 @@
       "property": "__get__products"
     }
   ],
-  "methods": {}
+  "methods": {},
+  "mixins": {
+    "TimeStamp": true
+  }
 }

@@ -17,6 +17,7 @@
     "strong-error-handler": "^1.0.1",
     "loopback-datasource-juggler": "^2.39.0",
     "loopback-connector-mysql": "*",
+    "loopback-ds-timestamp-mixin": "^3.0.0",
     "loopback": "^2.22.0"
   },
   "devDependencies": {

@@ -76,3 +76,98 @@ System_user.beforeRemote('create', function(context, user, next) {
   });
 </code></pre>
 
+##how to add mail funcion
+1.  add your email datasource like below
+<p>check datasources.json</p>
+<pre><code>
+  "emailDs": {
+    "name": "emailDs",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "smtp.gmail.com",
+        "secure": true,
+        "port": 465,
+        "tls": {
+          "rejectUnauthorized": false
+        },
+        "auth": {
+          "user": "loopbacktestwhd@gmail.com",
+          "pass": "k58516372"
+        }
+      }
+    ]
+  }
+</code></pre>
+2.  add it to your model 
+<p>check model-config.json</p>
+<pre><code>
+"Email": {
+    "dataSource": "emailDs"
+  }
+</code></pre>
+
+3.  use it
+<p>check system_user.json</p>
+<p>sample 1:send verify email after create new user</p>
+<pre><code>
+  System_user.afterRemote('create', function(context, user, next) {
+    console.log('> user.afterRemote triggered');
+    var options = {
+      type: 'email',
+      to: user.email,
+      from: 'loopbacktestwhd@gmail.com',
+      subject: 'Thanks for registering.',
+      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
+      redirect: '/verified',
+      user: user
+    };
+    user.verify(options, function(err, response) {
+      if (err) {
+        User.deleteById(user.id);
+        return next(err);
+      }
+      console.log('> verification email sent:', response);
+      context.res.render('response', {
+        title: 'Signed up successfully',
+        content: 'Please check your email and click on the verification link ' +
+        'before logging in.',
+        redirectTo: '/',
+        redirectToLinkText: 'Log in'
+      });
+    });
+  });
+</code></pre>
+
+<p>sample 2:send reset password email </p>
+<pre><code>
+  System_user.afterRemote('create', function(context, user, next) {
+    console.log('> user.afterRemote triggered');
+    var options = {
+      type: 'email',
+      to: user.email,
+      from: 'loopbacktestwhd@gmail.com',
+      subject: 'Thanks for registering.',
+      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
+      redirect: '/verified',
+      user: user
+    };
+    user.verify(options, function(err, response) {
+      if (err) {
+        User.deleteById(user.id);
+        return next(err);
+      }
+      console.log('> verification email sent:', response);
+      context.res.render('response', {
+        title: 'Signed up successfully',
+        content: 'Please check your email and click on the verification link ' +
+        'before logging in.',
+        redirectTo: '/',
+        redirectToLinkText: 'Log in'
+      });
+    });
+  });
+</code></pre>
+
+3.  other server login please check /server/boot/routes.js

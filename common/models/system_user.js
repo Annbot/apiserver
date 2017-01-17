@@ -31,8 +31,6 @@ module.exports = function(System_user) {
     console.log('> user.afterRemote triggered');
     var options = {
       type: 'email',
-      protocol:config.protocal,
-      port:config.port,
       to: user.email,
       from: 'loopbacktestwhd@gmail.com',
       subject: 'Thanks for registering.',

@@ -21,9 +21,10 @@ module.exports = function(System_user) {
   //send verification email after registration
   System_user.afterRemote('create', function(context, user, next) {
     console.log('> user.afterRemote triggered');
-
     var options = {
       type: 'email',
+      protocol:config.protocal,
+      port:config.port,
       to: user.email,
       from: 'loopbacktestwhd@gmail.com',
       subject: 'Thanks for registering.',

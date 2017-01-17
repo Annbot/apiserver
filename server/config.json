@@ -1,8 +1,7 @@
 {
   "restApiRoot": "/api",
-  "protocal":"https",
-  "host": "chancedemo-apiserver.mybluemix.net",
-  "port": 443,
+  "host": "0.0.0.0",
+  "port": 3000,
   "remoting": {
     "context": false,
     "rest": {

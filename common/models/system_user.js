@@ -19,6 +19,14 @@ module.exports = function(System_user) {
   });
 
   //send verification email after registration
+  //todo:when deploy to bluemix , config.json need to be edited
+  //todo:"protocal":"https",
+  //todo:"host": "chancedemo-apiserver.mybluemix.net",
+  //todo:"port": 443,
+  //todo:when deploy to local , config.json need to be edited
+  //todo:"protocal":"http",
+  //todo:"host": "localhost",
+  //todo:"port": 3000,
   System_user.afterRemote('create', function(context, user, next) {
     console.log('> user.afterRemote triggered');
     var options = {

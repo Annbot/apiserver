@@ -19,7 +19,6 @@ module.exports = function(System_user) {
   });
 
   //send verification email after registration
-  //todo:when deploy to bluemix , config.json need to be edited
   //todo:"protocal":"https",
   //todo:"host": "chancedemo-apiserver.mybluemix.net",
   //todo:"port": 443,
@@ -30,6 +29,11 @@ module.exports = function(System_user) {
   System_user.afterRemote('create', function(context, user, next) {
     console.log('> user.afterRemote triggered');
     var options = {
+      //todo:when deploy to local , comment start
+      protocol: 'https',
+      host: 'chancedemo-apiserver.mybluemix.net',
+      port: '443',
+      //todo:when deploy to local , comment end
       type: 'email',
       to: user.email,
       from: 'loopbacktestwhd@gmail.com',
